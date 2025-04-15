@@ -128,17 +128,17 @@ shp_ch_data <- ne_countries(
 shp_ch_data <- vect(as(shp_ch_data, "Spatial"))
 
 # to compare new grids
-rd <- rast("/mnt/climstor/meteoswiss/RhydchprobD/LV95/2014/RhydchprobD_grid.ens_ch01h.swiss.lv95_201407010000_201407310000.nc")
-rd_24 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_24", sep = "")]])
-rd_25 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_25", sep = "")]])
-rd_26 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_26", sep = "")]])
-rd_27 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_27", sep = "")]])
-rd_28 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_28", sep = "")]])
-rd_ev <- c(rd_24, rd_25, rd_26, rd_27, rd_28)
-rd_ev <- project(rd_ev, grid)
-
-terra::writeCDF(rd_ev,
-                "data/grid_prc_data/RhydchprobD_median_event.nc")
+# rd <- rast("/mnt/climstor/meteoswiss/RhydchprobD/LV95/2014/RhydchprobD_grid.ens_ch01h.swiss.lv95_201407010000_201407310000.nc")
+# rd_24 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_24", sep = "")]])
+# rd_25 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_25", sep = "")]])
+# rd_26 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_26", sep = "")]])
+# rd_27 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_27", sep = "")]])
+# rd_28 <- median(rd[[paste("RhydchprobD_realization=", 1:50,"_28", sep = "")]])
+# rd_ev <- c(rd_24, rd_25, rd_26, rd_27, rd_28)
+# rd_ev <- project(rd_ev, grid)
+# 
+# terra::writeCDF(rd_ev,
+#                 "data/grid_prc_data/RhydchprobD_median_event.nc")
 
 # precip fields
 xe_glm <- terra::rast(dir("./pred_ch_glm/", full.names = TRUE))
@@ -253,3 +253,13 @@ ggplot() +
 
 ggsave("output/Fig_03-model-grid-comparison-scatterplot-RhydchprobD.pdf", width = 700, heigh = 500, scale = 3, units = "px")
 
+
+# supplementary
+sf_01 <- dyncovars[[1]]
+names(sf_01) <- paste(names(sf_01), dOe, sep = "_")
+sf_02 <- dyncovars[[2]]
+names(sf_02) <- paste(names(sf_02), dOe, sep = "_")
+
+pdf("output/FigS_01-ch.pdf", width = 9, height = 6.5)
+plot(c(grid, sf_01, sf_02), axes = FALSE, legend = FALSE, mar = c(0, 0, 0, 0), nc = 5, maxnl = 18)
+dev.off()

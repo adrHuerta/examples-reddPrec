@@ -149,4 +149,8 @@ ggpubr::ggarrange(spc, bpc, ncol = 1, nrow = 2, widths = c(1, 0.1), heights = c(
 ggsave("output/Fig_03-model-grid-comparison-scatterplot-CSIC.pdf", width = 730, heigh = 500, scale = 3, units = "px")
 
 
+# supplementary
+pdf("output/FigS_02-va.pdf", width = 9, height = 3.5)
+plot(grid, axes = FALSE, legend = FALSE, mar = c(0, 0, 0, 0), nc = 5, maxnl = 18)
+dev.off()
 
