@@ -151,6 +151,14 @@ ggsave("output/Fig_03-model-grid-comparison-scatterplot-CSIC.pdf", width = 730, 
 
 # supplementary
 pdf("output/FigS_02-va.pdf", width = 9, height = 3.5)
-plot(grid, axes = FALSE, legend = FALSE, mar = c(0, 0, 0, 0), nc = 5, maxnl = 18)
+local({
+  counter <- 0
+  plot(grid, fun = function(x) {
+    counter <<- counter + 1
+    if (counter == 1) {
+      points(sts[, c("lon", "lat")], col = "red", pch = 20)
+    }
+  }, axes = FALSE, legend = FALSE, mar = c(0, 0, 0, 0), nc = 5, maxnl = 18)
+})
 dev.off()
 

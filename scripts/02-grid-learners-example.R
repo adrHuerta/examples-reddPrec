@@ -261,5 +261,13 @@ sf_02 <- dyncovars[[2]]
 names(sf_02) <- paste(names(sf_02), dOe, sep = "_")
 
 pdf("output/FigS_01-ch.pdf", width = 9, height = 6.5)
-plot(c(grid, sf_01, sf_02), axes = FALSE, legend = FALSE, mar = c(0, 0, 0, 0), nc = 5, maxnl = 18)
+local({
+  counter <- 0
+  plot(c(grid, sf_01, sf_02), fun = function(x) {
+    counter <<- counter + 1
+    if (counter == 1) {
+      points(sts[, c("lon", "lat")], col = "red", pch = 20)
+    }
+  }, axes = FALSE, legend = FALSE, mar = c(0, 0, 0, 0), nc = 5, maxnl = 18)
+})
 dev.off()
