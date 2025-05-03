@@ -22,4 +22,5 @@ Each script is self-contained and includes comments to help you understand the p
 If you use `reddPrec` in your research, please cite:
 
 > Serrano-Notivoli, R., de Luis, M., & Beguería, S. (2017). An R package for daily precipitation climate series reconstruction. Environmental modelling & software, 89, 190-195.
+
 > Huerta et al. (2025). Enhancing daily precipitation series reconstruction: An improved version of the reddPrec R package. In preparation.
