@@ -146,7 +146,7 @@ bpc <-
 ggpubr::ggarrange(spc, bpc, ncol = 1, nrow = 2, widths = c(1, 0.1), heights = c(1, .8),
                   align = 'v', labels = c("a)", "b)"),
                   font.label = list(size = 12, face = "plain"))
-ggsave("output/Fig_03-model-grid-comparison-scatterplot-CSIC.pdf", width = 730, heigh = 500, scale = 3, units = "px")
+ggsave("output/Fig_04-model-grid-comparison-scatterplot-CSIC.pdf", width = 730, heigh = 500, scale = 3, units = "px")
 
 
 # supplementary
