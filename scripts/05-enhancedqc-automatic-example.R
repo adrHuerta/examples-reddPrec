@@ -5,7 +5,7 @@ library(ggplot2)
 library(rnaturalearth)
 library(giscoR)
 library(rnaturalearthdata)
-library(reddPrec)
+library(reddPrec) 
 
 # ensuring 1 core is used (in my local I had to do it, check your own local)
 RhpcBLASctl::blas_set_num_threads(1)

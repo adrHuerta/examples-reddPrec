@@ -1,7 +1,7 @@
 rm(list = ls())
 
 library(xts)
-library(reddPrec)
+library(reddPrec) 
 
 ts_data <- readRDS("data/enhanced-qc-plots.RDS")
 

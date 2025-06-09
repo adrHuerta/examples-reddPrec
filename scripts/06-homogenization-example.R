@@ -4,7 +4,7 @@ library(xts)
 library(zoo)
 library(ggplot2)
 library(reddPrec)
-source("R/metrics.R")
+source("R/metrics2.R")  # it uses dr and mcc
 
 # ----- Step 1: Define Data -----
 set.seed(123)
@@ -242,18 +242,18 @@ trend_r1mm_res <- lapply(break_info$Station,
 trend_r1mm_res <- do.call(rbind, trend_r1mm_res)
 
 trend_PRCPTOT_res <- get_dr_bcc(trend_PRCPTOT_res)
-colnames(trend_PRCPTOT_res) <- c("dr-slope", "bcc-slope")
+colnames(trend_PRCPTOT_res) <- c("dr-slope", "mcc-slope")
 trend_PRCPTOT_res$ID <- NA
 trend_r1mm_res <- get_dr_bcc(trend_r1mm_res)
-colnames(trend_r1mm_res) <- c("dr-slope", "bcc-slope")
+colnames(trend_r1mm_res) <- c("dr-slope", "mcc-slope")
 trend_r1mm_res$ID <- NA
 
 ## comparison of results (only added breaks): plot
 
 to_plot <- rbind(data.frame(reshape2::melt(detection_res, measure.vars = c("BDA", "TA"), variable.name = "Metric"), type = "Detection"),
-                 data.frame(reshape2::melt(adjusment_res, measure.vars = c("dr", "bcc"), variable.name = "Metric"), type = "Adjustment"),
-                 data.frame(reshape2::melt(trend_PRCPTOT_res, measure.vars = c("dr-slope", "bcc-slope"), variable.name = "Metric"), type = "Trend-PRCPTOT"),
-                 data.frame(reshape2::melt(trend_r1mm_res, measure.vars = c("dr-slope", "bcc-slope"), variable.name = "Metric"), type = "Trend-R1mm"))
+                 data.frame(reshape2::melt(adjusment_res, measure.vars = c("dr", "mcc"), variable.name = "Metric"), type = "Adjustment"),
+                 data.frame(reshape2::melt(trend_PRCPTOT_res, measure.vars = c("dr-slope", "mcc-slope"), variable.name = "Metric"), type = "Trend-PRCPTOT"),
+                 data.frame(reshape2::melt(trend_r1mm_res, measure.vars = c("dr-slope", "mcc-slope"), variable.name = "Metric"), type = "Trend-R1mm"))
 to_plot$type <- factor(to_plot$type, levels = c("Detection", "Adjustment", "Trend-PRCPTOT", "Trend-R1mm"))
 
 to_plot_mean <- aggregate(value ~ Metric + type, data = to_plot, FUN = function(x) round(mean(x), 2))
@@ -262,7 +262,7 @@ ggplot() +
   geom_boxplot(data = to_plot, aes(y = value, x = Metric), outliers = FALSE) + 
   facet_grid(~type, scales = "free_x") + 
   geom_text(data = to_plot_mean, aes(y = value + 0.04, x = Metric, label = value), size = 3)+
-  scale_y_continuous(limits = c(0.5, 1.05)) +
+  scale_y_continuous(limits = c(0.45, 1.05)) +
   xlab("") + ylab("") +
   theme_bw()
 
@@ -329,9 +329,9 @@ trend_all_dr_bcc <- rbind(
 
 trend_all_dr_bcc$Corrupted <- factor(trend_all_dr_bcc$Corrupted, levels = c("No", "Yes", "ALL"))
 trend_all_dr_bcc <- transform(trend_all_dr_bcc,
-                              label = paste(" dr:", round(dr, 2), " /", " bcc:", round(bcc, 2), sep = ""))
+                              label = paste(" dr:", round(dr, 2), " /", " mcc:", round(mcc, 2), sep = ""))
 trend_all_dr_bcc$mod <- c(-4, -5, -1.15, -1.35)
-trend_all_dr_bcc$obs <- c(2, 2, 0.47, 0.52)
+trend_all_dr_bcc$obs <- c(1.95, 1.95, 0.45, 0.47)
 
 precip_xts_wb_hmg_trend_all_plt <-
   ggplot() +
@@ -407,7 +407,7 @@ trend_all_dr_bcc <- rbind(
 )
 
 trend_all_dr_bcc <- transform(trend_all_dr_bcc,
-                              label = paste(" dr:", round(dr, 2), " /", " bcc:", round(bcc, 2), sep = ""))
+                              label = paste(" dr:", round(dr, 2), " /", " mcc:", round(mcc, 2), sep = ""))
 trend_all_dr_bcc$mod <- c(-2, -.25)
 trend_all_dr_bcc$obs <- c(2, 0.47)
 

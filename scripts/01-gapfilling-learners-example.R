@@ -3,7 +3,7 @@ rm(list = ls())
 library(xts)
 library(ggplot2)
 library(reddPrec)
-source("R/metrics.R")
+source("R/metrics2.R") # it uses dr and mcc
 
 # swiss example data
 ch_data <- readRDS("data/ch_gf_data.RDS")
@@ -104,7 +104,7 @@ ggplot(df_stat,
   scale_x_discrete(drop = FALSE) +
   theme_bw() +
   facet_wrap( ~factor(metrics,
-                      c("bcc", "dr"))) +
+                      c("mcc", "dr"))) +
   theme(legend.position = "none") + 
   scale_y_continuous(limits = c(0.5, 1))
 

@@ -7,7 +7,7 @@ library(rnaturalearthdata)
 library(tidyterra)
 library(ggplot2)
 library(reddPrec)
-source("R/metrics.R")
+source("R/metrics2.R")  # it uses dr and mcc
 
 # Valencia event daily data 2024-10-29 https://digital.csic.es/handle/10261/374208
 daily_val <- read.csv("data/valencia_daily.csv")
@@ -137,7 +137,7 @@ bpc <-
             aes(x = 150, y = 800-10, label = paste("dr  : ", dr)),
             size = 3, color = "gray30") +
   geom_text(data = df_all_dr_bcc,
-            aes(x = 150, y = 725-10, label = paste("bcc: ", bcc)),
+            aes(x = 150, y = 725-10, label = paste("mcc: ", mcc)),
             size = 3, color = "gray30") +
   facet_wrap(~ grid, ncol = 4) + theme_bw() + 
   scale_x_continuous(limits = c(0, 800)) + 

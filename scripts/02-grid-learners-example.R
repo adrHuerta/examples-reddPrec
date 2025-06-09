@@ -7,7 +7,7 @@ library(rnaturalearth)
 library(rnaturalearthdata)
 library(ggplot2)
 library(reddPrec)
-source("R/metrics.R")
+source("R/metrics2.R")  # it uses dr and mcc
 
 # ch data
 ch_data <- readRDS("data/ch_gf_data.RDS")
@@ -246,7 +246,7 @@ ggplot() +
             aes(x = 15, y = 65, label = paste("dr  : ", dr)),
             size = 3, color = "gray30") +
   geom_text(data = dr_bcc_dOe_all,
-            aes(x = 15, y = 57, label = paste("bcc: ", bcc)),
+            aes(x = 15, y = 57, label = paste("mcc: ", mcc)),
             size = 3, color = "gray30") +
   facet_grid(grid~date_time, switch = "y") +
   theme_bw()
